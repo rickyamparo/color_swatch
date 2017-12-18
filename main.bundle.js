@@ -10487,11 +10487,7 @@ var _colors = __webpack_require__(0);
 
 var _colors2 = _interopRequireDefault(_colors);
 
-var _top_colors = __webpack_require__(8);
-
-var _top_colors2 = _interopRequireDefault(_top_colors);
-
-var _swatches = __webpack_require__(9);
+var _swatches = __webpack_require__(8);
 
 var _swatches2 = _interopRequireDefault(_swatches);
 
@@ -11098,32 +11094,25 @@ module.exports = function (css) {
 "use strict";
 
 
-var $ = __webpack_require__(1);
-
-$('span.top-color').ready(function () {
-  $.get('https://color-swatch-api.herokuapp.com/api/v1/top_color', function (data) {
-    $('span.top-color').append(data.value + " Color Count:" + data.color_count);
-  });
-});
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
 var _colors = __webpack_require__(0);
 
 var _colors2 = _interopRequireDefault(_colors);
 
-var _swatches_helpers = __webpack_require__(10);
+var _swatches_helpers = __webpack_require__(9);
 
 var _swatches_helpers2 = _interopRequireDefault(_swatches_helpers);
 
-var _swatches_appender = __webpack_require__(12);
+var _swatches_appender = __webpack_require__(11);
 
 var _swatches_appender2 = _interopRequireDefault(_swatches_appender);
+
+var _top_color_appender = __webpack_require__(12);
+
+var _top_color_appender2 = _interopRequireDefault(_top_color_appender);
+
+var _get_top_color = __webpack_require__(13);
+
+var _get_top_color2 = _interopRequireDefault(_get_top_color);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11131,6 +11120,8 @@ var $ = __webpack_require__(1);
 
 
 $(document).ready(function () {
+
+  findTopColor();
 
   $('button').click(function () {
     createSwatches();
@@ -11153,8 +11144,14 @@ var createSwatches = function createSwatches() {
   (0, _swatches_appender2.default)(uniqueText);
 };
 
+var findTopColor = function findTopColor() {
+  (0, _get_top_color2.default)().done(function (data) {
+    (0, _top_color_appender2.default)(data);
+  });
+};
+
 /***/ }),
-/* 10 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11164,7 +11161,7 @@ var _colors = __webpack_require__(0);
 
 var _colors2 = _interopRequireDefault(_colors);
 
-var _post_colors = __webpack_require__(11);
+var _post_colors = __webpack_require__(10);
 
 var _post_colors2 = _interopRequireDefault(_post_colors);
 
@@ -11189,7 +11186,7 @@ var colorSifter = function colorSifter(array, colorArray) {
 module.exports = { unique: unique, colorSifter: colorSifter };
 
 /***/ }),
-/* 11 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11212,7 +11209,7 @@ var postColor = function postColor(color) {
 module.exports = postColor;
 
 /***/ }),
-/* 12 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11235,6 +11232,36 @@ var colorAppender = function colorAppender(arrayOfColors) {
 };
 
 module.exports = colorAppender;
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var $ = __webpack_require__(1);
+
+var topColorAppender = function topColorAppender(data) {
+  $('span.top-color').append(data.value + " Color Count:" + data.color_count);
+};
+
+module.exports = topColorAppender;
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var $ = __webpack_require__(1);
+
+var getTopColor = function getTopColor() {
+  return $.get('https://color-swatch-api.herokuapp.com/api/v1/top_color');
+};
+
+module.exports = getTopColor;
 
 /***/ })
 /******/ ]);
